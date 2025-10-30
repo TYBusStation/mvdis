@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>監理服務網客運公司查詢書籤</title>
+    <style>
+        :root {
+            --bg-color: #121212;
+            --surface-color: #1e1e1e;
+            --primary-text-color: #e0e0e0;
+            --secondary-text-color: #b3b3b3;
+            --border-color: #333;
+            --link-color: #64b5f6;
+            --button-bg-color: #007bff;
+            --button-text-color: #fff;
+            --note-bg-color: #2c2b00;
+            --note-border-color: #a79c00;
+            --note-text-color: #fff59d;
+            --code-inline-bg: #333;
+            --code-block-bg: #2d2d2d;
+            --code-block-text: #f1f1f1;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: var(--bg-color);
+            color: var(--primary-text-color);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: var(--surface-color);
+            padding: 25px 40px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        h1, h2 {
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+            color: #ffffff;
+        }
+
+        h1 {
+            font-size: 2em;
+        }
+
+        h2 {
+            font-size: 1.5em;
+            margin-top: 40px;
+        }
+
+        ol {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+            color: var(--secondary-text-color);
+        }
+
+        strong {
+            color: var(--primary-text-color);
+        }
+
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Collapsible code block */
+        details {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        summary {
+            font-weight: bold;
+            padding: 15px;
+            cursor: pointer;
+            background-color: #252525;
+            outline: none;
+            user-select: none;
+        }
+
+        summary:hover {
+            background-color: #303030;
+        }
+
+        pre {
+            background-color: var(--code-block-bg);
+            color: var(--code-block-text);
+            padding: 20px;
+            margin: 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 0.9em;
+        }
+
+        code {
+            font-family: "Courier New", Courier, monospace;
+            background-color: var(--code-inline-bg);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.95em;
+        }
+
+        .copy-button {
+            padding: 10px 15px;
+            background-color: var(--button-bg-color);
+            color: var(--button-text-color);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: background-color 0.2s, transform 0.1s;
+            margin-top: 15px;
+        }
+
+        .copy-button:hover {
+            background-color: #0056b3;
+        }
+
+        .copy-button:active {
+            transform: scale(0.97);
+        }
+
+        .note {
+            background-color: var(--note-bg-color);
+            color: var(--note-text-color);
+            border: 1px solid var(--note-border-color);
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>監理服務網客運公司查詢書籤</h1>
+    <p>此工具可以讓您在任何網頁上，快速透過 SEQ 編號查詢監理服務網上的客運公司車輛及駕駛詳細資訊。</p>
+
+    <h2>預備工作</h2>
+    <ol>
+        <li>
+            <strong>手機請使用 Firefox 瀏覽器</strong>
+            <div class="note">注意：此書籤在電腦版瀏覽器上皆可正常運作，但在手機上 Firefox 以外的部分瀏覽器可能不適用。</div>
+        </li>
+        <li>將隨便一個網頁加入您的書籤列中，作為稍後修改的範本。</li>
+        <li>
+            <strong>點擊下方按鈕以複製腳本</strong>
+            <br>
+            您也可以點擊下方的區塊來展開、檢視完整的腳本內容。
+            <br>
+            <button id="copyBtn" class="copy-button">複製腳本</button>
+            <details>
+                <summary>檢視腳本原始碼</summary>
+                <pre><code id="bookmarkletCode">javascript:(function(){if(typeof jQuery=="undefined"){var s=document.createElement("script");s.src="https://code.jquery.com/jquery-3.6.0.min.js";s.onload=runBookmarklet;document.head.appendChild(s)}else{runBookmarklet()}function runBookmarklet(){if($("#bookmarklet-overlay-universal").length&gt;0)return;var overlay=$("&lt;div&gt;").attr("id","bookmarklet-overlay-universal").css({position:"fixed",top:0,left:0,width:"100%",height:"100%",background:"rgba(0,0,0,0.7)",zIndex:99999,display:"flex",justifyContent:"center",alignItems:"center"});var box=$("&lt;div&gt;").css({background:"white",padding:"25px",borderRadius:"8px",boxShadow:"0 5px 15px rgba(0,0,0,0.3)",textAlign:"center",width:"90%",maxWidth:"320px"});var label=$("&lt;p&gt;").text("請輸入要查詢的 SEQ 編號：").css({margin:0,marginBottom:"15px",fontSize:"16px",color:"#333"});var input=$("&lt;input&gt;").attr({type:"text",inputmode:"numeric",pattern:"[0-9]*",id:"bookmarklet-seq-input-universal"}).css({width:"100%",padding:"12px",fontSize:"18px",border:"1px solid #ccc",borderRadius:"5px",boxSizing:"border-box",textAlign:"center"});var submitBtn=$("&lt;button&gt;").text("查詢 (開啟新分頁)").css({width:"100%",padding:"12px",fontSize:"16px",color:"white",backgroundColor:"#007bff",border:"none",borderRadius:"5px",marginTop:"15px",cursor:"pointer"});submitBtn.on("click",function(e){e.preventDefault();var seq=$("#bookmarklet-seq-input-universal").val().trim();if(seq&&!isNaN(seq)){var url="https://www.mvdis.gov.tw/m3-emv-mk3/freeway/query?method=queryCarDetail&amp;seq="+encodeURIComponent(seq)+"&amp;companyName=&amp;countyName=&amp;town=&amp;address=&amp;tel=";window.open(url,"_blank");overlay.remove()}else{alert("請輸入有效的數字編號。")}});var closeBtn=$("&lt;button&gt;").text("取消").css({width:"100%",padding:"10px",fontSize:"16px",color:"#333",backgroundColor:"#f0f0f0",border:"1px solid #ccc",borderRadius:"5px",marginTop:"8px",cursor:"pointer"});closeBtn.on("click",function(){overlay.remove()});overlay.on("click",function(e){if(e.target===this)overlay.remove()});box.append(label,input,submitBtn,closeBtn);overlay.append(box);$("body").append(overlay);input.focus()}})();</code></pre>
+            </details>
+        </li>
+        <li>
+            <strong>修改書籤內容</strong>
+            <br>
+            編輯您剛剛新增的書籤，將「名稱」欄位改成容易辨識的名稱（例如：<code>監理服務網快速查詢</code>），並將「網址」或「URL」欄位完全清空，貼上剛剛複製的腳本內容後儲存。
+        </li>
+    </ol>
+
+    <h2>開始使用</h2>
+    <ol>
+        <li>進入<a href="https://www.mvdis.gov.tw/" target="_blank" rel="noopener noreferrer">監理服務網</a>。</li>
+        <li>點擊您先前儲存好的書籤，畫面上會跳出一個灰底的對話框，提示您輸入要查詢的 SEQ 編號。</li>
+        <li>在輸入框中，輸入您想查詢的車輛 SEQ 編號。</li>
+        <li>點擊「查詢 (開啟新分頁)」按鈕。</li>
+        <li>如果輸入的編號有效，瀏覽器將會在新分頁中開啟監理服務網的查詢結果頁面。</li>
+        <li>如果輸入的不是數字，將會跳出提示訊息，此時請重新點擊書籤即可再次使用。</li>
+    </ol>
+</div>
+
+<script>
+    const copyButton = document.getElementById('copyBtn');
+    const codeToCopy = document.getElementById('bookmarkletCode').textContent;
+
+    copyButton.addEventListener('click', () => {
+        navigator.clipboard.writeText(codeToCopy).then(() => {
+            copyButton.textContent = '已複製！';
+            setTimeout(() => {
+                copyButton.textContent = '複製腳本';
+            }, 2000);
+        }).catch(err => {
+            console.error('複製失敗: ', err);
+            copyButton.textContent = '複製失敗';
+            setTimeout(() => {
+                copyButton.textContent = '複製腳本';
+            }, 2000);
+        });
+    });
+</script>
+</body>
+</html>
