@@ -145,6 +145,35 @@
             border-radius: 5px;
             margin-top: 15px;
         }
+
+        /* Table styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            text-align: left;
+            color: var(--secondary-text-color);
+        }
+
+        thead th {
+            background-color: #252525;
+            color: var(--primary-text-color);
+            font-weight: bold;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #2c2c2c;
+        }
+
+        tbody tr:hover {
+            background-color: #3a3a3a;
+        }
+
     </style>
 </head>
 <body>
@@ -186,6 +215,146 @@
         <li>如果輸入的編號有效，瀏覽器將會在新分頁中開啟監理服務網的查詢結果頁面。</li>
         <li>如果輸入的不是數字，將會跳出提示訊息，此時請重新點擊書籤即可再次使用。</li>
     </ol>
+
+    <h2>客運公司 SEQ 編號列表</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>SEQ 編號</th>
+            <th>公司名稱</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr><td>137</td><td>大湖鄉公所</td></tr>
+        <tr><td>187</td><td>中壢客運</td></tr>
+        <tr><td>230</td><td>桃園客運</td></tr>
+        <tr><td>481</td><td>苑裡鎮公所</td></tr>
+        <tr><td>1066</td><td>尖石鄉公所</td></tr>
+        <tr><td>1229</td><td>苗栗客運</td></tr>
+        <tr><td>1265</td><td>大都會客運</td></tr>
+        <tr><td>1413</td><td>光華巴士</td></tr>
+        <tr><td>1489</td><td>欣欣客運</td></tr>
+        <tr><td>2281</td><td>指南客運</td></tr>
+        <tr><td>2463</td><td>五峰鄉公所</td></tr>
+        <tr><td>2677</td><td>汎航通運</td></tr>
+        <tr><td>3006</td><td>金台通運</td></tr>
+        <tr><td>3114</td><td>金牌客運</td></tr>
+        <tr><td>3119</td><td>興南客運</td></tr>
+        <tr><td>3235</td><td>台聯客運</td></tr>
+        <tr><td>3265</td><td>日統客運</td></tr>
+        <tr><td>3368</td><td>建明客運</td></tr>
+        <tr><td>3538</td><td>豪泰客運</td></tr>
+        <tr><td>3991</td><td>新竹客運</td></tr>
+        <tr><td>4098</td><td>亞通客運</td></tr>
+        <tr><td>4287</td><td>科技之星</td></tr>
+        <tr><td>4301</td><td>公館鄉公所</td></tr>
+        <tr><td>4547</td><td>台西客運</td></tr>
+        <tr><td>5011</td><td>和欣客運</td></tr>
+        <tr><td>5327</td><td>通霄鎮公所</td></tr>
+        <tr><td>5387</td><td>台中東南客運</td></tr>
+        <tr><td>5410</td><td>豐原客運</td></tr>
+        <tr><td>5827</td><td>南投客運</td></tr>
+        <tr><td>5896</td><td>嘉義客運</td></tr>
+        <tr><td>5958</td><td>總達客運</td></tr>
+        <tr><td>6422</td><td>台北東南客運</td></tr>
+        <tr><td>6514</td><td>嘉義縣公車處</td></tr>
+        <tr><td>6590</td><td>雄獅通運</td></tr>
+        <tr><td>6657</td><td>太魯閣客運</td></tr>
+        <tr><td>6671</td><td>府城客運</td></tr>
+        <tr><td>6762</td><td>仁友客運</td></tr>
+        <tr><td>7268</td><td>金門縣公車處</td></tr>
+        <tr><td>7475</td><td>杉林溪客運</td></tr>
+        <tr><td>7628</td><td>員林客運</td></tr>
+        <tr><td>7642</td><td>中興巴士</td></tr>
+        <tr><td>7844</td><td>新營客運</td></tr>
+        <tr><td>7863</td><td>斗南鎮公所</td></tr>
+        <tr><td>8002</td><td>彰化客運</td></tr>
+        <tr><td>8038</td><td>捷乘交通</td></tr>
+        <tr><td>8093</td><td>普悠瑪客運</td></tr>
+        <tr><td>8161</td><td>中鹿客運</td></tr>
+        <tr><td>8287</td><td>蘭嶼鄉公所</td></tr>
+        <tr><td>8403</td><td>澎湖縣公車處</td></tr>
+        <tr><td>9201</td><td>豐榮客運</td></tr>
+        <tr><td>9392</td><td>港都客運</td></tr>
+        <tr><td>9464</td><td>連江縣公車處</td></tr>
+        <tr><td>9651</td><td>大有巴士</td></tr>
+        <tr><td>10223</td><td>霧台鄉公所</td></tr>
+        <tr><td>10591</td><td>高雄客運</td></tr>
+        <tr><td>11048</td><td>大南汽車</td></tr>
+        <tr><td>11349</td><td>中台灣客運</td></tr>
+        <tr><td>11373</td><td>巨業交通</td></tr>
+        <tr><td>11948</td><td>義大客運</td></tr>
+        <tr><td>12366</td><td>高雄統聯客運</td></tr>
+        <tr><td>12393</td><td>南臺灣客運</td></tr>
+        <tr><td>12446</td><td>埔里鎮公所</td></tr>
+        <tr><td>12452</td><td>高雄漢程客運</td></tr>
+        <tr><td>12631</td><td>屏東客運</td></tr>
+        <tr><td>12635</td><td>高雄東南客運</td></tr>
+        <tr><td>12644</td><td>全航客運</td></tr>
+        <tr><td>12818</td><td>台中客運</td></tr>
+        <tr><td>13034</td><td>魚池鄉公所</td></tr>
+        <tr><td>13149</td><td>琉球鄉公所</td></tr>
+        <tr><td>13467</td><td>葛瑪蘭客運</td></tr>
+        <tr><td>13489</td><td>中寮鄉公所</td></tr>
+        <tr><td>13496</td><td>信義鄉公所</td></tr>
+        <tr><td>13735</td><td>亞聯客運</td></tr>
+        <tr><td>13869</td><td>淡水客運</td></tr>
+        <tr><td>13963</td><td>三重客運</td></tr>
+        <tr><td>13975</td><td>統聯客運</td></tr>
+        <tr><td>14022</td><td>首都客運</td></tr>
+        <tr><td>14155</td><td>臺北客運</td></tr>
+        <tr><td>14336</td><td>基隆客運</td></tr>
+        <tr><td>14339</td><td>基隆市公車處</td></tr>
+        <tr><td>14346</td><td>國光客運</td></tr>
+        <tr><td>14351</td><td>華聯客運</td></tr>
+        <tr><td>14387</td><td>新北客運</td></tr>
+        <tr><td>14449</td><td>皇家客運</td></tr>
+        <tr><td>14479</td><td>新店客運</td></tr>
+        <tr><td>15643</td><td>泰武鄉公所</td></tr>
+        <tr><td>15645</td><td>三地門鄉公所</td></tr>
+        <tr><td>15647</td><td>瑪家鄉公所</td></tr>
+        <tr><td>15735</td><td>獅子鄉公所</td></tr>
+        <tr><td>15820</td><td>楊梅區公所</td></tr>
+        <tr><td>15944</td><td>頭屋鄉公所</td></tr>
+        <tr><td>16028</td><td>四方客運</td></tr>
+        <tr><td>16145</td><td>未知(803-U7)</td></tr>
+        <tr><td>16219</td><td>苗栗市公所</td></tr>
+        <tr><td>16250</td><td>春日鄉公所</td></tr>
+        <tr><td>16769</td><td>泰安鄉公所</td></tr>
+        <tr><td>16850</td><td>來義鄉公所</td></tr>
+        <tr><td>16936</td><td>達仁鄉公所</td></tr>
+        <tr><td>16965</td><td>泰樂客運</td></tr>
+        <tr><td>17106</td><td>草屯鎮公所</td></tr>
+        <tr><td>17108</td><td>鳳林鎮公所</td></tr>
+        <tr><td>17143</td><td>台南漢程客運</td></tr>
+        <tr><td>17148</td><td>秀林鄉公所</td></tr>
+        <tr><td>17158</td><td>金峰鄉公所</td></tr>
+        <tr><td>17172</td><td>長濱鄉公所</td></tr>
+        <tr><td>17175</td><td>未知(KKA-7006)</td></tr>
+        <tr><td>17179</td><td>日豪客運</td></tr>
+        <tr><td>17261</td><td>五結鄉公所</td></tr>
+        <tr><td>17292</td><td>海端鄉公所</td></tr>
+        <tr><td>17327</td><td>滿州鄉公所</td></tr>
+        <tr><td>17377</td><td>蘇澳鎮公所</td></tr>
+        <tr><td>17420</td><td>未知(FAC-808)</td></tr>
+        <tr><td>17496</td><td>瑞穗鄉公所</td></tr>
+        <tr><td>17616</td><td>南澳鄉公所</td></tr>
+        <tr><td>17758</td><td>竹南鎮公所</td></tr>
+        <tr><td>17872</td><td>興東客運</td></tr>
+        <tr><td>17874</td><td>東台灣客運</td></tr>
+        <tr><td>17913</td><td>南迴協會</td></tr>
+        <tr><td>18098</td><td>望安鄉公所</td></tr>
+        <tr><td>18102</td><td>竹塘鄉公所</td></tr>
+        <tr><td>18232</td><td>睿奕交通</td></tr>
+        <tr><td>18338</td><td>七美鄉公所</td></tr>
+        <tr><td>18378</td><td>亦捷科際</td></tr>
+        <tr><td>18552</td><td>捷乘客運</td></tr>
+        <tr><td>18561</td><td>石壁文化發展協會</td></tr>
+        <tr><td>18681</td><td>永靖鄉公所</td></tr>
+        <tr><td>18769</td><td>和美鄉公所</td></tr>
+        <tr><td>18781</td><td>三星鄉公所</td></tr>
+        </tbody>
+    </table>
 </div>
 
 <script>
