@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>監理服務網客運公司查詢書籤</title>
+    <title>監理服務網客運公司直接查詢</title>
     <style>
         :root {
             --bg-color: #121212;
@@ -14,12 +14,13 @@
             --link-color: #64b5f6;
             --button-bg-color: #007bff;
             --button-text-color: #fff;
-            --note-bg-color: #2c2b00;
-            --note-border-color: #a79c00;
-            --note-text-color: #fff59d;
-            --code-inline-bg: #333;
-            --code-block-bg: #2d2d2d;
-            --code-block-text: #f1f1f1;
+            --button-hover-bg: #0056b3;
+            --input-bg: #2d2d2d;
+            --input-border: #444;
+            --code-bg: #101010;
+            --code-text: #a5d6a7;
+            --highlight-color: #4caf50;
+            --unknown-color: #ff9800;
         }
 
         body {
@@ -38,115 +39,165 @@
             padding: 25px 40px;
             border-radius: 8px;
             border: 1px solid var(--border-color);
-        }
-
-        h1, h2 {
-            border-bottom: 2px solid var(--border-color);
-            padding-bottom: 10px;
-            color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
         }
 
         h1 {
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+            color: #ffffff;
             font-size: 2em;
+            margin-top: 0;
         }
 
         h2 {
             font-size: 1.5em;
             margin-top: 40px;
+            color: #fff;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 5px;
         }
 
-        ol {
-            padding-left: 20px;
-        }
-
-        li {
-            margin-bottom: 10px;
-            color: var(--secondary-text-color);
-        }
-
-        strong {
-            color: var(--primary-text-color);
-        }
-
-        a {
-            color: var(--link-color);
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        /* Collapsible code block */
-        details {
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            margin-top: 10px;
-            overflow: hidden;
-        }
-
-        summary {
-            font-weight: bold;
-            padding: 15px;
-            cursor: pointer;
+        .search-section {
             background-color: #252525;
-            outline: none;
-            user-select: none;
-        }
-
-        summary:hover {
-            background-color: #303030;
-        }
-
-        pre {
-            background-color: var(--code-block-bg);
-            color: var(--code-block-text);
             padding: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin: 20px 0;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .input-row {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 15px;
+            width: 100%;
+        }
+
+        input[type="text"], input[type="number"] {
+            padding: 10px;
+            font-size: 1.1em;
+            border-radius: 5px;
+            border: 1px solid var(--input-border);
+            background-color: var(--input-bg);
+            color: #fff;
+            width: 120px;
+            text-align: center;
+        }
+
+        input[type=number]::-webkit-outer-spin-button,
+        input[type=number]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
             margin: 0;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            font-size: 0.9em;
         }
 
-        code {
-            font-family: "Courier New", Courier, monospace;
-            background-color: var(--code-inline-bg);
-            padding: 2px 6px;
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+
+        input:focus {
+            outline: 2px solid var(--button-bg-color);
+            border-color: transparent;
+        }
+
+        .company-display {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: var(--highlight-color);
+            text-align: center;
+            min-width: 100px;
+            min-height: 1.6em;
+        }
+
+        .company-display.unknown {
+            color: var(--unknown-color);
+        }
+
+        .company-display.empty {
+            color: var(--secondary-text-color);
+            font-weight: normal;
+        }
+
+        .url-display {
+            margin-bottom: 15px;
+            width: 100%;
+        }
+
+        .url-code {
+            display: block;
+            background-color: var(--code-bg);
+            color: var(--code-text);
+            padding: 12px;
             border-radius: 4px;
-            font-size: 0.95em;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 0.9em;
+            word-break: break-all;
+            border: 1px solid #333;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
         }
 
-        .copy-button {
-            padding: 10px 15px;
+        .url-code:hover {
+            border-color: var(--link-color);
+            background-color: #1a1a1a;
+        }
+
+        .url-code:active {
+            transform: scale(0.99);
+        }
+
+        .tooltip {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #4caf50;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        .tooltip.show {
+            opacity: 1;
+        }
+
+        button.search-btn {
+            width: 100%;
+            max-width: 200px;
+            padding: 10px 25px;
             background-color: var(--button-bg-color);
             color: var(--button-text-color);
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 1em;
+            font-size: 1.1em;
             font-weight: bold;
             transition: background-color 0.2s, transform 0.1s;
-            margin-top: 15px;
         }
 
-        .copy-button:hover {
-            background-color: #0056b3;
+        button.search-btn:hover {
+            background-color: var(--button-hover-bg);
         }
 
-        .copy-button:active {
+        button.search-btn:active {
             transform: scale(0.97);
         }
 
-        .note {
-            background-color: var(--note-bg-color);
-            color: var(--note-text-color);
-            border: 1px solid var(--note-border-color);
-            padding: 15px;
-            border-radius: 5px;
-            margin-top: 15px;
+        .table-container {
+            overflow-x: auto;
         }
 
-        /* Table styles */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -164,6 +215,13 @@
             background-color: #252525;
             color: var(--primary-text-color);
             font-weight: bold;
+            position: sticky;
+            top: 0;
+        }
+
+        tbody tr {
+            cursor: pointer;
+            transition: background-color 0.2s;
         }
 
         tbody tr:nth-child(even) {
@@ -171,210 +229,268 @@
         }
 
         tbody tr:hover {
-            background-color: #3a3a3a;
+            background-color: #3a4a5e;
+            color: #fff;
         }
 
+        tbody tr:hover td {
+            color: #fff;
+        }
+
+        .hint {
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: var(--secondary-text-color);
+        }
     </style>
 </head>
 <body>
 <div class="container">
-    <h1>監理服務網客運公司查詢書籤</h1>
-    <p>此工具可以讓您在任何網頁上，快速透過 SEQ 編號查詢監理服務網上的客運公司車輛及駕駛詳細資訊。</p>
+    <h1>監理服務網客運公司查詢</h1>
+    <p>輸入 SEQ 編號，快速查詢監理服務網上的客運公司車輛及駕駛詳細資訊。</p>
 
-    <h2>預備工作</h2>
-    <ol>
-        <li>
-            <strong>手機請使用 Firefox 瀏覽器</strong>
-            <div class="note">注意：此書籤在電腦版瀏覽器上皆可正常運作，但在手機上 Firefox 以外的部分瀏覽器可能不適用。</div>
-        </li>
-        <li>將隨便一個網頁加入您的書籤列中，作為稍後修改的範本。</li>
-        <li>
-            <strong>點擊下方按鈕以複製腳本</strong>
-            <br>
-            您也可以點擊下方的區塊來展開、檢視完整的腳本內容。
-            <br>
-            <button id="copyBtn" class="copy-button">複製腳本</button>
-            <details>
-                <summary>檢視腳本原始碼</summary>
-                <pre><code id="bookmarkletCode">javascript:(function(){if(typeof jQuery=="undefined"){var s=document.createElement("script");s.src="https://code.jquery.com/jquery-3.6.0.min.js";s.onload=runBookmarklet;document.head.appendChild(s)}else{runBookmarklet()}function runBookmarklet(){if($("#bookmarklet-overlay-universal").length&gt;0)return;var overlay=$("&lt;div&gt;").attr("id","bookmarklet-overlay-universal").css({position:"fixed",top:0,left:0,width:"100%",height:"100%",background:"rgba(0,0,0,0.7)",zIndex:99999,display:"flex",justifyContent:"center",alignItems:"center"});var box=$("&lt;div&gt;").css({background:"white",padding:"25px",borderRadius:"8px",boxShadow:"0 5px 15px rgba(0,0,0,0.3)",textAlign:"center",width:"90%",maxWidth:"320px"});var label=$("&lt;p&gt;").text("請輸入要查詢的 SEQ 編號：").css({margin:0,marginBottom:"15px",fontSize:"16px",color:"#333"});var input=$("&lt;input&gt;").attr({type:"text",inputmode:"numeric",pattern:"[0-9]*",id:"bookmarklet-seq-input-universal"}).css({width:"100%",padding:"12px",fontSize:"18px",border:"1px solid #ccc",borderRadius:"5px",boxSizing:"border-box",textAlign:"center"});var submitBtn=$("&lt;button&gt;").text("查詢 (開啟新分頁)").css({width:"100%",padding:"12px",fontSize:"16px",color:"white",backgroundColor:"#007bff",border:"none",borderRadius:"5px",marginTop:"15px",cursor:"pointer"});submitBtn.on("click",function(e){e.preventDefault();var seq=$("#bookmarklet-seq-input-universal").val().trim();if(seq&&!isNaN(seq)){var url="https://www.mvdis.gov.tw/m3-emv-mk3/freeway/query?method=queryCarDetail&amp;seq="+encodeURIComponent(seq)+"&amp;companyName=&amp;countyName=&amp;town=&amp;address=&amp;tel=";window.open(url,"_blank");overlay.remove()}else{alert("請輸入有效的數字編號。")}});var closeBtn=$("&lt;button&gt;").text("取消").css({width:"100%",padding:"10px",fontSize:"16px",color:"#333",backgroundColor:"#f0f0f0",border:"1px solid #ccc",borderRadius:"5px",marginTop:"8px",cursor:"pointer"});closeBtn.on("click",function(){overlay.remove()});overlay.on("click",function(e){if(e.target===this)overlay.remove()});box.append(label,input,submitBtn,closeBtn);overlay.append(box);$("body").append(overlay);input.focus()}})();</code></pre>
-            </details>
-        </li>
-        <li>
-            <strong>修改書籤內容</strong>
-            <br>
-            編輯您剛剛新增的書籤，將「名稱」欄位改成容易辨識的名稱（例如：<code>監理服務網快速查詢</code>），並將「網址」或「URL」欄位完全清空，貼上剛剛複製的腳本內容後儲存。
-        </li>
-    </ol>
+    <div class="search-section">
+        <div class="input-row">
+            <input type="number" id="seqInput" placeholder="SEQ" onkeypress="handleEnter(event)" oninput="updateUrlDisplay()">
+            <span id="companyDisplay" class="company-display"></span>
+        </div>
 
-    <h2>開始使用</h2>
-    <ol>
-        <li>進入<a href="https://www.mvdis.gov.tw/" target="_blank" rel="noopener noreferrer">監理服務網</a>。</li>
-        <li>點擊您先前儲存好的書籤，畫面上會跳出一個灰底的對話框，提示您輸入要查詢的 SEQ 編號。</li>
-        <li>在輸入框中，輸入您想查詢的車輛 SEQ 編號。</li>
-        <li>點擊「查詢 (開啟新分頁)」按鈕。</li>
-        <li>如果輸入的編號有效，瀏覽器將會在新分頁中開啟監理服務網的查詢結果頁面。</li>
-        <li>如果輸入的不是數字，將會跳出提示訊息，此時請重新點擊書籤即可再次使用。</li>
-    </ol>
+        <div class="url-display">
+            <div id="urlText" class="url-code" onclick="copyUrl()">
+                https://www.mvdis.gov.tw/m3-emv-mk3/freeway/query?method=queryCarDetail&seq=
+                <span id="copyTooltip" class="tooltip">已複製連結！</span>
+            </div>
+        </div>
+
+        <button class="search-btn" onclick="performSearch()">前往</button>
+        <p class="hint">提示：點擊網址可複製；點擊下方表格可自動填入。</p>
+    </div>
 
     <h2>客運公司 SEQ 編號列表</h2>
-    <table>
-        <thead>
-        <tr>
-            <th>SEQ 編號</th>
-            <th>公司名稱</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr><td>137</td><td>大湖鄉公所</td></tr>
-        <tr><td>187</td><td>中壢客運</td></tr>
-        <tr><td>230</td><td>桃園客運</td></tr>
-        <tr><td>481</td><td>苑裡鎮公所</td></tr>
-        <tr><td>1066</td><td>尖石鄉公所</td></tr>
-        <tr><td>1229</td><td>苗栗客運</td></tr>
-        <tr><td>1265</td><td>大都會客運</td></tr>
-        <tr><td>1413</td><td>光華巴士</td></tr>
-        <tr><td>1489</td><td>欣欣客運</td></tr>
-        <tr><td>2281</td><td>指南客運</td></tr>
-        <tr><td>2463</td><td>五峰鄉公所</td></tr>
-        <tr><td>2677</td><td>汎航通運</td></tr>
-        <tr><td>3006</td><td>金台通運</td></tr>
-        <tr><td>3114</td><td>金牌客運</td></tr>
-        <tr><td>3119</td><td>興南客運</td></tr>
-        <tr><td>3235</td><td>台聯客運</td></tr>
-        <tr><td>3265</td><td>日統客運</td></tr>
-        <tr><td>3368</td><td>建明客運</td></tr>
-        <tr><td>3538</td><td>豪泰客運</td></tr>
-        <tr><td>3991</td><td>新竹客運</td></tr>
-        <tr><td>4098</td><td>亞通客運</td></tr>
-        <tr><td>4287</td><td>科技之星</td></tr>
-        <tr><td>4301</td><td>公館鄉公所</td></tr>
-        <tr><td>4547</td><td>台西客運</td></tr>
-        <tr><td>5011</td><td>和欣客運</td></tr>
-        <tr><td>5327</td><td>通霄鎮公所</td></tr>
-        <tr><td>5387</td><td>台中東南客運</td></tr>
-        <tr><td>5410</td><td>豐原客運</td></tr>
-        <tr><td>5827</td><td>南投客運</td></tr>
-        <tr><td>5896</td><td>嘉義客運</td></tr>
-        <tr><td>5958</td><td>總達客運</td></tr>
-        <tr><td>6422</td><td>台北東南客運</td></tr>
-        <tr><td>6514</td><td>嘉義縣公車處</td></tr>
-        <tr><td>6590</td><td>雄獅通運</td></tr>
-        <tr><td>6657</td><td>太魯閣客運</td></tr>
-        <tr><td>6671</td><td>府城客運</td></tr>
-        <tr><td>6762</td><td>仁友客運</td></tr>
-        <tr><td>7268</td><td>金門縣公車處</td></tr>
-        <tr><td>7475</td><td>杉林溪客運</td></tr>
-        <tr><td>7628</td><td>員林客運</td></tr>
-        <tr><td>7642</td><td>中興巴士</td></tr>
-        <tr><td>7844</td><td>新營客運</td></tr>
-        <tr><td>7863</td><td>斗南鎮公所</td></tr>
-        <tr><td>8002</td><td>彰化客運</td></tr>
-        <tr><td>8038</td><td>捷乘交通</td></tr>
-        <tr><td>8093</td><td>普悠瑪客運</td></tr>
-        <tr><td>8161</td><td>中鹿客運</td></tr>
-        <tr><td>8287</td><td>蘭嶼鄉公所</td></tr>
-        <tr><td>8403</td><td>澎湖縣公車處</td></tr>
-        <tr><td>9201</td><td>豐榮客運</td></tr>
-        <tr><td>9392</td><td>港都客運</td></tr>
-        <tr><td>9464</td><td>連江縣公車處</td></tr>
-        <tr><td>9651</td><td>大有巴士</td></tr>
-        <tr><td>10223</td><td>霧台鄉公所</td></tr>
-        <tr><td>10591</td><td>高雄客運</td></tr>
-        <tr><td>11048</td><td>大南汽車</td></tr>
-        <tr><td>11349</td><td>中台灣客運</td></tr>
-        <tr><td>11373</td><td>巨業交通</td></tr>
-        <tr><td>11948</td><td>義大客運</td></tr>
-        <tr><td>12366</td><td>高雄統聯客運</td></tr>
-        <tr><td>12393</td><td>南臺灣客運</td></tr>
-        <tr><td>12446</td><td>埔里鎮公所</td></tr>
-        <tr><td>12452</td><td>高雄漢程客運</td></tr>
-        <tr><td>12631</td><td>屏東客運</td></tr>
-        <tr><td>12635</td><td>高雄東南客運</td></tr>
-        <tr><td>12644</td><td>全航客運</td></tr>
-        <tr><td>12818</td><td>台中客運</td></tr>
-        <tr><td>13034</td><td>魚池鄉公所</td></tr>
-        <tr><td>13149</td><td>琉球鄉公所</td></tr>
-        <tr><td>13467</td><td>葛瑪蘭客運</td></tr>
-        <tr><td>13489</td><td>中寮鄉公所</td></tr>
-        <tr><td>13496</td><td>信義鄉公所</td></tr>
-        <tr><td>13735</td><td>亞聯客運</td></tr>
-        <tr><td>13869</td><td>淡水客運</td></tr>
-        <tr><td>13963</td><td>三重客運</td></tr>
-        <tr><td>13975</td><td>統聯客運</td></tr>
-        <tr><td>14022</td><td>首都客運</td></tr>
-        <tr><td>14155</td><td>臺北客運</td></tr>
-        <tr><td>14336</td><td>基隆客運</td></tr>
-        <tr><td>14339</td><td>基隆市公車處</td></tr>
-        <tr><td>14346</td><td>國光客運</td></tr>
-        <tr><td>14351</td><td>華聯客運</td></tr>
-        <tr><td>14387</td><td>新北客運</td></tr>
-        <tr><td>14449</td><td>皇家客運</td></tr>
-        <tr><td>14479</td><td>新店客運</td></tr>
-        <tr><td>15643</td><td>泰武鄉公所</td></tr>
-        <tr><td>15645</td><td>三地門鄉公所</td></tr>
-        <tr><td>15647</td><td>瑪家鄉公所</td></tr>
-        <tr><td>15735</td><td>獅子鄉公所</td></tr>
-        <tr><td>15820</td><td>楊梅區公所</td></tr>
-        <tr><td>15944</td><td>頭屋鄉公所</td></tr>
-        <tr><td>16028</td><td>四方客運</td></tr>
-        <tr><td>16145</td><td>未知(803-U7)</td></tr>
-        <tr><td>16219</td><td>苗栗市公所</td></tr>
-        <tr><td>16250</td><td>春日鄉公所</td></tr>
-        <tr><td>16769</td><td>泰安鄉公所</td></tr>
-        <tr><td>16850</td><td>來義鄉公所</td></tr>
-        <tr><td>16936</td><td>達仁鄉公所</td></tr>
-        <tr><td>16965</td><td>泰樂客運</td></tr>
-        <tr><td>17106</td><td>草屯鎮公所</td></tr>
-        <tr><td>17108</td><td>鳳林鎮公所</td></tr>
-        <tr><td>17143</td><td>台南漢程客運</td></tr>
-        <tr><td>17148</td><td>秀林鄉公所</td></tr>
-        <tr><td>17158</td><td>金峰鄉公所</td></tr>
-        <tr><td>17172</td><td>長濱鄉公所</td></tr>
-        <tr><td>17175</td><td>未知(KKA-7006)</td></tr>
-        <tr><td>17179</td><td>日豪客運</td></tr>
-        <tr><td>17261</td><td>五結鄉公所</td></tr>
-        <tr><td>17292</td><td>海端鄉公所</td></tr>
-        <tr><td>17327</td><td>滿州鄉公所</td></tr>
-        <tr><td>17377</td><td>蘇澳鎮公所</td></tr>
-        <tr><td>17420</td><td>未知(FAC-808)</td></tr>
-        <tr><td>17496</td><td>瑞穗鄉公所</td></tr>
-        <tr><td>17616</td><td>南澳鄉公所</td></tr>
-        <tr><td>17758</td><td>竹南鎮公所</td></tr>
-        <tr><td>17872</td><td>興東客運</td></tr>
-        <tr><td>17874</td><td>東台灣客運</td></tr>
-        <tr><td>17913</td><td>南迴協會</td></tr>
-        <tr><td>18098</td><td>望安鄉公所</td></tr>
-        <tr><td>18102</td><td>竹塘鄉公所</td></tr>
-        <tr><td>18232</td><td>睿奕交通</td></tr>
-        <tr><td>18338</td><td>七美鄉公所</td></tr>
-        <tr><td>18378</td><td>亦捷科際</td></tr>
-        <tr><td>18552</td><td>捷乘客運</td></tr>
-        <tr><td>18561</td><td>石壁文化發展協會</td></tr>
-        <tr><td>18681</td><td>永靖鄉公所</td></tr>
-        <tr><td>18769</td><td>和美鄉公所</td></tr>
-        <tr><td>18781</td><td>三星鄉公所</td></tr>
-        </tbody>
-    </table>
+    <div class="table-container">
+        <table id="seqTable">
+            <thead>
+            <tr>
+                <th>SEQ 編號</th>
+                <th>公司名稱</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr><td>137</td><td>大湖鄉公所</td></tr>
+            <tr><td>187</td><td>中壢客運</td></tr>
+            <tr><td>230</td><td>桃園客運</td></tr>
+            <tr><td>481</td><td>苑裡鎮公所</td></tr>
+            <tr><td>1066</td><td>尖石鄉公所</td></tr>
+            <tr><td>1229</td><td>苗栗客運</td></tr>
+            <tr><td>1265</td><td>大都會客運</td></tr>
+            <tr><td>1413</td><td>光華巴士</td></tr>
+            <tr><td>1489</td><td>欣欣客運</td></tr>
+            <tr><td>2281</td><td>指南客運</td></tr>
+            <tr><td>2463</td><td>五峰鄉公所</td></tr>
+            <tr><td>2677</td><td>汎航通運</td></tr>
+            <tr><td>3006</td><td>金台通運</td></tr>
+            <tr><td>3114</td><td>金牌客運</td></tr>
+            <tr><td>3119</td><td>興南客運</td></tr>
+            <tr><td>3235</td><td>台聯客運</td></tr>
+            <tr><td>3265</td><td>日統客運</td></tr>
+            <tr><td>3368</td><td>建明客運</td></tr>
+            <tr><td>3538</td><td>豪泰客運</td></tr>
+            <tr><td>3991</td><td>新竹客運</td></tr>
+            <tr><td>4098</td><td>亞通客運</td></tr>
+            <tr><td>4287</td><td>科技之星</td></tr>
+            <tr><td>4301</td><td>公館鄉公所</td></tr>
+            <tr><td>4547</td><td>台西客運</td></tr>
+            <tr><td>5011</td><td>和欣客運</td></tr>
+            <tr><td>5327</td><td>通霄鎮公所</td></tr>
+            <tr><td>5387</td><td>台中東南客運</td></tr>
+            <tr><td>5410</td><td>豐原客運</td></tr>
+            <tr><td>5827</td><td>南投客運</td></tr>
+            <tr><td>5896</td><td>嘉義客運</td></tr>
+            <tr><td>5958</td><td>總達客運</td></tr>
+            <tr><td>6422</td><td>台北東南客運</td></tr>
+            <tr><td>6514</td><td>嘉義縣公車處</td></tr>
+            <tr><td>6590</td><td>雄獅通運</td></tr>
+            <tr><td>6657</td><td>太魯閣客運</td></tr>
+            <tr><td>6671</td><td>府城客運</td></tr>
+            <tr><td>6762</td><td>仁友客運</td></tr>
+            <tr><td>7268</td><td>金門縣公車處</td></tr>
+            <tr><td>7475</td><td>杉林溪客運</td></tr>
+            <tr><td>7628</td><td>員林客運</td></tr>
+            <tr><td>7642</td><td>中興巴士</td></tr>
+            <tr><td>7844</td><td>新營客運</td></tr>
+            <tr><td>7863</td><td>斗南鎮公所</td></tr>
+            <tr><td>8002</td><td>彰化客運</td></tr>
+            <tr><td>8038</td><td>捷乘交通</td></tr>
+            <tr><td>8093</td><td>普悠瑪客運</td></tr>
+            <tr><td>8161</td><td>中鹿客運</td></tr>
+            <tr><td>8287</td><td>蘭嶼鄉公所</td></tr>
+            <tr><td>8403</td><td>澎湖縣公車處</td></tr>
+            <tr><td>9201</td><td>豐榮客運</td></tr>
+            <tr><td>9392</td><td>港都客運</td></tr>
+            <tr><td>9464</td><td>連江縣公車處</td></tr>
+            <tr><td>9651</td><td>大有巴士</td></tr>
+            <tr><td>10223</td><td>霧台鄉公所</td></tr>
+            <tr><td>10591</td><td>高雄客運</td></tr>
+            <tr><td>11048</td><td>大南汽車</td></tr>
+            <tr><td>11349</td><td>中台灣客運</td></tr>
+            <tr><td>11373</td><td>巨業交通</td></tr>
+            <tr><td>11948</td><td>義大客運</td></tr>
+            <tr><td>12366</td><td>高雄統聯客運</td></tr>
+            <tr><td>12393</td><td>南臺灣客運</td></tr>
+            <tr><td>12446</td><td>埔里鎮公所</td></tr>
+            <tr><td>12452</td><td>高雄漢程客運</td></tr>
+            <tr><td>12631</td><td>屏東客運</td></tr>
+            <tr><td>12635</td><td>高雄東南客運</td></tr>
+            <tr><td>12644</td><td>全航客運</td></tr>
+            <tr><td>12818</td><td>台中客運</td></tr>
+            <tr><td>13034</td><td>魚池鄉公所</td></tr>
+            <tr><td>13149</td><td>琉球鄉公所</td></tr>
+            <tr><td>13467</td><td>葛瑪蘭客運</td></tr>
+            <tr><td>13489</td><td>中寮鄉公所</td></tr>
+            <tr><td>13496</td><td>信義鄉公所</td></tr>
+            <tr><td>13735</td><td>亞聯客運</td></tr>
+            <tr><td>13869</td><td>淡水客運</td></tr>
+            <tr><td>13963</td><td>三重客運</td></tr>
+            <tr><td>13975</td><td>統聯客運</td></tr>
+            <tr><td>14022</td><td>首都客運</td></tr>
+            <tr><td>14155</td><td>臺北客運</td></tr>
+            <tr><td>14336</td><td>基隆客運</td></tr>
+            <tr><td>14339</td><td>基隆市公車處</td></tr>
+            <tr><td>14346</td><td>國光客運</td></tr>
+            <tr><td>14351</td><td>華聯客運</td></tr>
+            <tr><td>14387</td><td>新北客運</td></tr>
+            <tr><td>14449</td><td>皇家客運</td></tr>
+            <tr><td>14479</td><td>新店客運</td></tr>
+            <tr><td>15643</td><td>泰武鄉公所</td></tr>
+            <tr><td>15645</td><td>三地門鄉公所</td></tr>
+            <tr><td>15647</td><td>瑪家鄉公所</td></tr>
+            <tr><td>15735</td><td>獅子鄉公所</td></tr>
+            <tr><td>15820</td><td>楊梅區公所</td></tr>
+            <tr><td>15944</td><td>頭屋鄉公所</td></tr>
+            <tr><td>16028</td><td>四方客運</td></tr>
+            <tr><td>16145</td><td>未知(803-U7)</td></tr>
+            <tr><td>16219</td><td>苗栗市公所</td></tr>
+            <tr><td>16250</td><td>春日鄉公所</td></tr>
+            <tr><td>16769</td><td>泰安鄉公所</td></tr>
+            <tr><td>16850</td><td>來義鄉公所</td></tr>
+            <tr><td>16936</td><td>達仁鄉公所</td></tr>
+            <tr><td>16965</td><td>泰樂客運</td></tr>
+            <tr><td>17106</td><td>草屯鎮公所</td></tr>
+            <tr><td>17108</td><td>鳳林鎮公所</td></tr>
+            <tr><td>17143</td><td>台南漢程客運</td></tr>
+            <tr><td>17148</td><td>秀林鄉公所</td></tr>
+            <tr><td>17158</td><td>金峰鄉公所</td></tr>
+            <tr><td>17172</td><td>長濱鄉公所</td></tr>
+            <tr><td>17175</td><td>未知(KKA-7006)</td></tr>
+            <tr><td>17179</td><td>日豪客運</td></tr>
+            <tr><td>17261</td><td>五結鄉公所</td></tr>
+            <tr><td>17292</td><td>海端鄉公所</td></tr>
+            <tr><td>17327</td><td>滿州鄉公所</td></tr>
+            <tr><td>17377</td><td>蘇澳鎮公所</td></tr>
+            <tr><td>17420</td><td>未知(FAC-808)</td></tr>
+            <tr><td>17496</td><td>瑞穗鄉公所</td></tr>
+            <tr><td>17616</td><td>南澳鄉公所</td></tr>
+            <tr><td>17758</td><td>竹南鎮公所</td></tr>
+            <tr><td>17872</td><td>興東客運</td></tr>
+            <tr><td>17874</td><td>東台灣客運</td></tr>
+            <tr><td>17913</td><td>南迴協會</td></tr>
+            <tr><td>18098</td><td>望安鄉公所</td></tr>
+            <tr><td>18102</td><td>竹塘鄉公所</td></tr>
+            <tr><td>18232</td><td>睿奕交通</td></tr>
+            <tr><td>18338</td><td>七美鄉公所</td></tr>
+            <tr><td>18378</td><td>亦捷科際</td></tr>
+            <tr><td>18552</td><td>捷乘客運</td></tr>
+            <tr><td>18561</td><td>石壁文化發展協會</td></tr>
+            <tr><td>18681</td><td>永靖鄉公所</td></tr>
+            <tr><td>18769</td><td>和美鄉公所</td></tr>
+            <tr><td>18781</td><td>三星鄉公所</td></tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <script>
-    const copyButton = document.getElementById('copyBtn');
-    const codeToCopy = document.getElementById('bookmarkletCode').textContent;
+    const seqInput = document.getElementById('seqInput');
+    const companyDisplay = document.getElementById('companyDisplay');
+    const urlText = document.getElementById('urlText');
+    const copyTooltip = document.getElementById('copyTooltip');
+    const baseUrl = 'https://www.mvdis.gov.tw/m3-emv-mk3/freeway/query?method=queryCarDetail&seq=';
+    const seqMap = {};
 
-    copyButton.addEventListener('click', () => {
-        navigator.clipboard.writeText(codeToCopy).then(() => {
-            copyButton.textContent = '已複製！';
+    document.querySelectorAll('#seqTable tbody tr').forEach(row => {
+        const seq = row.cells[0].textContent;
+        const name = row.cells[1].textContent;
+        seqMap[seq] = name;
+
+        row.addEventListener('click', function() {
+            seqInput.value = seq;
+            updateUrlDisplay();
+
+            seqInput.style.backgroundColor = '#444';
             setTimeout(() => {
-                copyButton.textContent = '複製腳本';
-            }, 2000);
-        }).catch(err => {
-            console.error('複製失敗: ', err);
-            copyButton.textContent = '複製失敗';
-            setTimeout(() => {
-                copyButton.textContent = '複製腳本';
-            }, 2000);
+                seqInput.style.backgroundColor = '';
+            }, 200);
+            seqInput.focus();
         });
     });
+
+    function updateUrlDisplay() {
+        const seq = seqInput.value.trim();
+        let displayUrl = baseUrl + encodeURIComponent(seq);
+
+        const textNode = urlText.childNodes[0];
+        if (textNode.nodeType === 3) {
+            textNode.nodeValue = displayUrl;
+        } else {
+            urlText.textContent = displayUrl;
+            urlText.appendChild(copyTooltip);
+        }
+
+        if (seq) {
+            if (seqMap[seq]) {
+                companyDisplay.textContent = seqMap[seq];
+                companyDisplay.className = 'company-display';
+            } else {
+                companyDisplay.textContent = '未知';
+                companyDisplay.className = 'company-display unknown';
+            }
+        } else {
+            // 修改部分：未填寫時顯示提示
+            companyDisplay.textContent = '請填寫編號';
+            companyDisplay.className = 'company-display empty';
+        }
+    }
+
+    function copyUrl() {
+        const url = urlText.innerText.replace('已複製連結！', '').trim();
+        navigator.clipboard.writeText(url).then(() => {
+            copyTooltip.classList.add('show');
+            setTimeout(() => {
+                copyTooltip.classList.remove('show');
+            }, 1500);
+        }).catch(err => {
+            console.error('複製失敗: ', err);
+        });
+    }
+
+    function performSearch() {
+        const seq = seqInput.value.trim();
+
+        if (seq && !isNaN(seq)) {
+            const url = baseUrl + encodeURIComponent(seq);
+            window.open(url, '_blank');
+        } else {
+            alert('請輸入有效的數字 SEQ 編號。');
+        }
+    }
+
+    function handleEnter(e) {
+        if (e.key === 'Enter') {
+            performSearch();
+        }
+    }
+
+    updateUrlDisplay();
 </script>
 </body>
 </html>
